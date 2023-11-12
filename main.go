@@ -40,6 +40,7 @@ func NewCell(x, y int) Cell {
 
 type Game struct {
 	StartTime time.Time
+	Cycles    int
 	Cells     [][]Cell
 }
 
@@ -68,7 +69,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 			}
 		}
 	}
-	time.Sleep(100 * time.Millisecond)
+	// time.Sleep(100 * time.Millisecond)
 }
 
 func drawRectangle(screen *ebiten.Image, c Cell) {
@@ -81,7 +82,6 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 
 func (g *Game) Update() error {
 	// Your game's update logic
-	cycles := 0
 	newCells := [][]Cell{}
 	for i, cr := range g.Cells {
 		newCells = append(newCells, []Cell{})
@@ -91,10 +91,13 @@ func (g *Game) Update() error {
 			// newCell.LifeCycles--
 			newCells[i] = append(newCells[i], newCell)
 		}
-		cycles++
 	}
+	g.Cycles++
 
-	log.Println("Time elapsed:", time.Since(g.StartTime), "Cycles: ", cycles)
+	// log.Println("Time elapsed:", time.Since(g.StartTime), "Cycles: ", cycles)
+	log.Println("Time elapsed:", time.Since(g.StartTime))
+	log.Println("Cycles:", g.Cycles)
+	log.Println("------")
 	g.Cells = newCells
 
 	return nil
