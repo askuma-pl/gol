@@ -2,7 +2,6 @@ package main
 
 import (
 	"image/color"
-	"log"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -63,9 +62,6 @@ func (g *Game) Update() error {
 	}
 	g.Cycles++
 
-	log.Println("Time elapsed:", time.Since(g.StartTime))
-	log.Println("Cycles:", g.Cycles)
-	log.Println("------")
 	g.Cells = newCells
 
 	return nil
