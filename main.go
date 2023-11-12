@@ -21,20 +21,20 @@ func RandBool() bool {
 }
 
 type Cell struct {
-	X          int
-	Y          int
-	Live       bool
-	Color      color.RGBA
-	LifeCycles int
+	X     int
+	Y     int
+	Live  bool
+	Color color.RGBA
+	// LifeCycles int
 }
 
 func NewCell(x, y int) Cell {
 	return Cell{
-		X:          x,
-		Y:          y,
-		Live:       RandBool(),
-		Color:      color.RGBA{0, 255, 0, 255},
-		LifeCycles: 100,
+		X:     x,
+		Y:     y,
+		Live:  RandBool(),
+		Color: color.RGBA{0, 255, 0, 255},
+		// LifeCycles: 100,
 	}
 }
 
@@ -88,7 +88,7 @@ func (g *Game) Update() error {
 		for _, c := range cr {
 			newCell := c
 			newCell.Live = g.checkIfCellLive(c)
-			newCell.LifeCycles--
+			// newCell.LifeCycles--
 			newCells[i] = append(newCells[i], newCell)
 		}
 		cycles++
@@ -127,9 +127,9 @@ func (g *Game) checkIfCellLive(c Cell) bool {
 		counter++
 	}
 
-	if c.LifeCycles <= 0 {
-		return false
-	}
+	// if c.LifeCycles <= 0 {
+	// 	return false
+	// }
 
 	if !c.Live && counter == 3 {
 		return true
