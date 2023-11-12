@@ -1,7 +1,6 @@
 package main
 
 import (
-	"image/color"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -52,11 +51,12 @@ func (g *Game) Update() error {
 		for _, c := range cr {
 			newCell := c
 			newCell.Live = g.checkIfCellLive(c)
-			newCell.LifeCycles--
-			if newCell.LifeCycles < 0 {
-				newCell.LifeCycles = 255
+			if !c.Live {
+				newCell.resetLifeCycles()
 			}
-			newCell.Color = color.RGBA{0, 255, 0, uint8(newCell.LifeCycles)}
+
+			newCell.deduceLifeCycles()
+
 			newCells[i] = append(newCells[i], newCell)
 		}
 	}
@@ -93,10 +93,6 @@ func (g *Game) checkIfCellLive(c Cell) bool {
 	if g.checkW(c) {
 		counter++
 	}
-
-	// if c.LifeCycles <= 0 {
-	// 	return false
-	// }
 
 	if !c.Live && counter == 3 {
 		return true
